@@ -32,3 +32,23 @@ class Studente_DAO:
             cnx.close()
             print("Connection closed")
             return Studente(**stud[0])
+
+    def get_corsi_studente(self, matricola):
+        cnx = get_connection()
+        cursor = cnx.cursor(dictionary=True)
+        query = ("""SELECT c.codins, c.crediti, c.nome, c.pd 
+                    FROM  corso c, iscrizione i, studente s
+                    WHERE c.codins = i.codins AND i.matricola = s. matricola AND s.matricola = %s""")
+        cursor.execute(query, (matricola,))
+        res = cursor.fetchall()
+        if len(res) == 0:
+            cnx.close()
+            print("Connection closed")
+            return None
+        else:
+            cnx.close()
+            print("Connection closed")
+            lista_corsi = []
+            for corso in res:
+                lista_corsi.append(Corso(**corso))
+            return lista_corsi

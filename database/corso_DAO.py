@@ -17,3 +17,21 @@ class Corso_DAO:
         cnx.close()
         print("Connection closed")
         return lista_corsi
+
+    def iscrivi(self, studente, codice_corso):
+        cnx = get_connection()
+        cursor = cnx.cursor(dictionary=True)
+        query = """SELECT * FROM iscrizione WHERE matricola = %s AND codins = %s"""
+        cursor.execute(query, (studente._matricola, codice_corso))
+        res = cursor.fetchall()
+        if len(res) > 0:
+            cnx.close()
+            print("Connection closed")
+            return False
+        query = """INSERT INTO iscrizione VALUES (%s, %s)"""
+        cursor.execute(query, (studente._matricola, codice_corso))
+        cnx.commit()
+        print("Connection committed")
+        cnx.close()
+        print("Connection closed")
+        return True

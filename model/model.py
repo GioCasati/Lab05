@@ -16,3 +16,9 @@ class Model:
 
     def get_studente(self, matricola):
         return self._studente_dao.get_studente_matricola(matricola)
+
+    def get_corsi_studente(self, matricola):
+        return self._studente_dao.get_corsi_studente(matricola)
+
+    def iscrivi(self, studente, codice_corso):
+        return self._corso_dao.iscrivi(studente, codice_corso)

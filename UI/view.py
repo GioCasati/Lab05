@@ -33,21 +33,24 @@ class View(ft.UserControl):
             label="Nome",
             width=180,
             read_only=True,
-            on_focus=self._controller.handle_tentativo_inserimento_proibito)
+            on_focus=self._controller.handle_tentativo_inserimento_proibito,
+            disabled=True)
         self._txt_Cognome = ft.TextField(
             label="Cognome",
             width=180,
             read_only=True,
-            on_focus=self._controller.handle_tentativo_inserimento_proibito)
+            on_focus=self._controller.handle_tentativo_inserimento_proibito,
+            disabled=True)
         self._txt_CDS = ft.TextField(
             label="Corso di Studi",
             width=180,
             read_only=True,
-            on_focus=self._controller.handle_tentativo_inserimento_proibito)
+            on_focus=self._controller.handle_tentativo_inserimento_proibito,
+            disabled=True)
 
         self._btnCercaStudente = ft.ElevatedButton(text="Cerca studente", on_click=self._controller.handle_get_studente)
-        self._btnCercaCorsiDiStudente = ft.ElevatedButton(text="Cerca corsi a cui lo studente è iscritto")
-        self._btnIscriviStudenteACorso = ft.ElevatedButton(text="Iscrivi studente")
+        self._btnCercaCorsiDiStudente = ft.ElevatedButton(text="Cerca corsi a cui lo studente è iscritto", on_click=self._controller.handle_get_corsi_studente)
+        self._btnIscriviStudenteACorso = ft.ElevatedButton(text="Iscrivi studente", on_click=self._controller.handle_iscrizione)
 
         self._page.controls.append(self._title)
 
