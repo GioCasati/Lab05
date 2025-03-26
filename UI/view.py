@@ -21,26 +21,50 @@ class View(ft.UserControl):
     def load_interface(self):
         """Function that loads the graphical elements of the view"""
         # title
-        self._title = ft.Text("Hello World", color="blue", size=24)
+        self._title = ft.Text("Gestione studenti e corsi", color="blue", size=24)
+
+        self._ddSelezioneCorso = ft.Dropdown(label="Seleziona un corso", width=550, options=[])
+        self._btnCercaIscrittiCorso = ft.ElevatedButton(text="Cerca iscritti al corso", on_click=self._controller.handle_cerca_iscritti_corso)
+
+        self._txtInMatricola = ft.TextField(
+            label="Inserisci una matricola",
+            width=180)
+        self._txt_Nome = ft.TextField(
+            label="Nome",
+            width=180,
+            read_only=True,
+            on_focus=self._controller.handle_tentativo_inserimento_proibito)
+        self._txt_Cognome = ft.TextField(
+            label="Cognome",
+            width=180,
+            read_only=True,
+            on_focus=self._controller.handle_tentativo_inserimento_proibito)
+        self._txt_CDS = ft.TextField(
+            label="Corso di Studi",
+            width=180,
+            read_only=True,
+            on_focus=self._controller.handle_tentativo_inserimento_proibito)
+
+        self._btnCercaStudente = ft.ElevatedButton(text="Cerca studente", on_click=self._controller.handle_get_studente)
+        self._btnCercaCorsiDiStudente = ft.ElevatedButton(text="Cerca corsi a cui lo studente è iscritto")
+        self._btnIscriviStudenteACorso = ft.ElevatedButton(text="Iscrivi studente")
+
         self._page.controls.append(self._title)
 
-        #ROW with some controls
-        # text field for the name
-        self.txt_name = ft.TextField(
-            label="name",
-            width=200,
-            hint_text="Insert a your name"
-        )
-
-        # button for the "hello" reply
-        self.btn_hello = ft.ElevatedButton(text="Hello", on_click=self._controller.handle_hello)
-        row1 = ft.Row([self.txt_name, self.btn_hello],
-                      alignment=ft.MainAxisAlignment.CENTER)
+        row1 = ft.Row([self._ddSelezioneCorso, self._btnCercaIscrittiCorso])
         self._page.controls.append(row1)
+
+        row2 = ft.Row([self._txtInMatricola, self._txt_Nome, self._txt_Cognome, self._txt_CDS], )
+        self._page.controls.append(row2)
+
+        row3 = ft.Row([self._btnCercaStudente, self._btnCercaCorsiDiStudente, self._btnIscriviStudenteACorso])
+        self._page.controls.append(row3)
 
         # List View where the reply is printed
         self.txt_result = ft.ListView(expand=1, spacing=10, padding=20, auto_scroll=True)
         self._page.controls.append(self.txt_result)
+
+        self._controller.fill_interface()
         self._page.update()
 
     @property
@@ -62,5 +86,5 @@ class View(ft.UserControl):
         dlg.open = True
         self._page.update()
 
-    def update_page(self):
+    def update(self):
         self._page.update()
